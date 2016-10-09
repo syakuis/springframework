@@ -1,0 +1,38 @@
+buildscript {
+	repositories {
+		maven { url 'http://repo.spring.io/plugins-release' }
+	}
+	dependencies {
+		classpath 'org.springframework.build.gradle:propdeps-plugin:0.0.7'
+	}
+}
+
+group 'org.syaku'
+version '1.0.0.RELEAES'
+
+apply plugin: 'java'
+apply plugin: 'propdeps'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	slf4jVersion = '1.7.12'
+	junitVersion = '4.11'
+}
+
+dependencies {
+	compile "org.slf4j:jcl-over-slf4j:$slf4jVersion"
+	runtime('ch.qos.logback:logback-classic:1.1.7') {
+		exclude group: 'org.slf4j', module: 'slf4j-api'
+	}
+	testCompile "junit:junit:$junitVersion"
+
+	compile 'org.apache.commons:commons-lang3:3.4'
+
+	provided 'javax.servlet:javax.servlet-api:3.0.1'
+}
