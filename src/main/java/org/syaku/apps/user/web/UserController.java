@@ -30,11 +30,15 @@ public class UserController {
 	String usernameParameter;
 	@Value("#{config.passwordParameter}")
 	String passwordParameter;
+	@Value("#{config.ignoreParameterName}")
+	String ignoreParameterName;
+
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String dispMemberLogin(Model model) {
 		model.addAttribute("usernameParameter", usernameParameter);
 		model.addAttribute("passwordParameter", passwordParameter);
+		model.addAttribute("ignoreParameterName", ignoreParameterName);
 		return "login";
 	}
 
