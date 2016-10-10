@@ -63,7 +63,6 @@
       <!-- 로그인 -->
       <div>
         <form class="form-signin" role="form" id="login" method="POST" action="<c:url value="/user/signin" />">
-          <input type="hidden" name="${ignoreParameterName}" id="${ignoreParameterName}">
           <h2 class="form-signin-heading"><i class="fa fa-sign-in"></i> 로그인</h2>
           <input type="text" class="form-control" placeholder="아이디" id="user_id" name="${usernameParameter}" required>
           <input type="password" class="form-control" placeholder="비밀번호" id="password" name="${passwordParameter}" required>
@@ -96,24 +95,10 @@
       var message = responseData.message;
 
       if (error) {
-
-        // 중복로그인 체크인 경우...
-        if (code === 403) {
-
-          if (confirm(message)) {
-            $("#login #${ignoreParameterName}").val("success");
-            ajax();
-          } else {
-            $("#login #${ignoreParameterName}").val();
-          }
-
-        } else {
-          $('#message div').text(message);
-          $('#message').show(0, function() {
-            $(this).delay(1000).hide(0);
-          });
-        }
-
+        $('#message div').text(message);
+        $('#message').show(0, function() {
+          $(this).delay(1000).hide(0);
+        });
       } else {
         var redirectUrl = responseData.data.redirectUrl;
         var chain = responseData.data.chain;

@@ -1,4 +1,4 @@
-package org.syaku.apps.user.web;
+package org.syaku.apps.helloworld.web.apps.user.web;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.syaku.spring.security.session.SessionInformationSupport;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,14 +30,11 @@ public class UserController {
 	String usernameParameter;
 	@Value("#{config.passwordParameter}")
 	String passwordParameter;
-	@Value("#{config.ignoreParameterName}")
-	String ignoreParameterName;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String dispMemberLogin(Model model) {
 		model.addAttribute("usernameParameter", usernameParameter);
 		model.addAttribute("passwordParameter", passwordParameter);
-		model.addAttribute("ignoreParameterName", ignoreParameterName);
 		return "login";
 	}
 
@@ -60,10 +55,7 @@ public class UserController {
 
 	@RequestMapping(value = "/visitor", method = RequestMethod.DELETE)
 	public @ResponseBody
-	Map<String, Object> procMemberVisitorDelete(
-			@RequestBody Map< String, Object> data,
-			HttpServletRequest request,
-			HttpServletResponse response) {
+	Map<String, Object> procMemberVisitorDelete(@RequestBody Map< String, Object> data) {
 
 		SessionInformation session = sessionRegistry.getSessionInformation((String) data.get("sessionId"));
 		if (session != null) {
