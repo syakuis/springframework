@@ -10,29 +10,29 @@
 		<!-- 로그인 페이지를 포워드할지 리다이렉트할지 설정한다. -->
 		<b:entry key="redirect" value="false" />
 
-		<b:entry key="loginFormUrl" value="/member/login"/>
+		<b:entry key="loginFormUrl" value="/user/login"/>
 
 		<!-- 접근 권한 오류페이지 -->
-		<b:entry key="accessDeniedUrl" value="/member/error/accessDenied"/>
+		<b:entry key="accessDeniedUrl" value="/user/error/accessDenied"/>
 		<b:entry key="accessDeniedRedirect" value="false"/>
 
 		<b:entry key="usernameParameter" value="user_id"/>
 		<b:entry key="passwordParameter" value="password"/>
-		<b:entry key="loginProcessingUrl" value="/member/signin"/>
+		<b:entry key="loginProcessingUrl" value="/user/signin"/>
 
 		<!-- 로그인 실패 오류 페이지 -->
-		<b:entry key="loginFailureUrl" value="/member/error/loginFailure"/>
+		<b:entry key="loginFailureUrl" value="/user/error/loginFailure"/>
 
 		<!-- 로그인 후 페이지 이동 설정 -->
 		<b:entry key="alwaysUseDefaultTargetUrl" value="false"/>
-		<b:entry key="defaultTargetUrl" value="/member/mypage"/>
+		<b:entry key="defaultTargetUrl" value="/user/mypage"/>
 
-		<b:entry key="logoutSuccessUrl" value="/member/login"/>
-		<b:entry key="logoutProcessingUrl" value="/member/signout"/>
+		<b:entry key="logoutSuccessUrl" value="/user/login"/>
+		<b:entry key="logoutProcessingUrl" value="/user/signout"/>
 		<b:entry key="cookiesToClear" value="JSESSIONID"/>
 
 		<!-- 세션이 만료되었을때 이동할 페이지 -->
-		<b:entry key="sessionExpiredUrl" value="/member/error/duplicationLogin"/>
+		<b:entry key="sessionExpiredUrl" value="/user/error/sessionExpired"/>
 
 		<!-- 중복로그인 설정 -->
 		<!--
@@ -53,12 +53,12 @@
 
 	<http pattern="/favicon.ico" security="none" />
 	<http pattern="/resources/**" security="none" />
-	<http pattern="/member/error/**" security="none" />
-	<http pattern="/hello" security="none" />
+	<http pattern="/user/error/**" security="none" />
+	<http pattern="/helloworld" security="none" />
 
 	<http auto-config="false" use-expressions="true" entry-point-ref="authenticationEntryPoint">
-		<intercept-url pattern="/member/login/**" access="permitAll" />
-		<intercept-url pattern="/member/visitor" access="hasAnyRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/user/login/**" access="permitAll" />
+		<intercept-url pattern="/user/visitor" access="hasAnyRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/**" access="hasAnyRole('ROLE_USER')" />
 
 		<access-denied-handler ref="accessDeniedHandler" />
