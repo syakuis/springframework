@@ -67,7 +67,7 @@
 		<access-denied-handler ref="accessDeniedHandler" />
 
 		<custom-filter ref="concurrentSessionFilter" position="CONCURRENT_SESSION_FILTER" />
-		<custom-filter ref="concurrentSessionDecisionFilter" before="FORM_LOGIN_FILTER" />
+		<custom-filter ref="duplicationLoginCheckFilter" before="FORM_LOGIN_FILTER" />
 		<custom-filter ref="usernamePasswordAuthenticationFilter" position="FORM_LOGIN_FILTER" />
 		<custom-filter ref="logoutFilter" position="LOGOUT_FILTER" />
 
@@ -75,7 +75,7 @@
 		<csrf disabled="true"/>
 	</http>
 
-	<b:bean id="concurrentSessionDecisionFilter" class="org.syaku.spring.security.filter.ConcurrentSessionDecisionFilter">
+	<b:bean id="duplicationLoginCheckFilter" class="org.syaku.spring.security.filter.DuplicationLoginCheckFilter">
 		<b:constructor-arg name="loginProcessingUrl" value="#{config.loginProcessingUrl}" />
 		<b:constructor-arg name="userDetailsService" ref="userDetailsService" />
 		<b:constructor-arg name="sessionRegistry" ref="sessionRegistry" />

@@ -31,19 +31,25 @@ import java.io.PrintWriter;
  * @site http://syaku.tistory.com
  * @since 2016. 9. 22.
  */
-public class ConcurrentSessionDecisionFilter extends GenericFilterBean {
+public class DuplicationLoginCheckFilter extends GenericFilterBean {
 
 	private final SessionRegistry sessionRegistry;
 	private final UserDetailsService userDetailsService;
 	private final String loginProcessingUrl;
 	private String ignoreParameterName = "duplicationCheckSuccess";
 
-	public ConcurrentSessionDecisionFilter(SessionRegistry sessionRegistry, UserDetailsService userDetailsService, String loginProcessingUrl) {
+	public DuplicationLoginCheckFilter(SessionRegistry sessionRegistry, UserDetailsService userDetailsService, String loginProcessingUrl) {
 		this.sessionRegistry = sessionRegistry;
 		this.userDetailsService = userDetailsService;
 		this.loginProcessingUrl = loginProcessingUrl;
 	}
 
+	/**
+	 * 중복로그인 검사를 생략하기 위한 파라메터
+	 * 값이 있는 경우 중복로그인 검사을 생략한다.
+	 *
+	 * @param ignoreParameterName the ignore parameter name
+	 */
 	public void setIgnoreParameterName(String ignoreParameterName) {
 		this.ignoreParameterName = ignoreParameterName;
 	}
@@ -54,17 +60,20 @@ public class ConcurrentSessionDecisionFilter extends GenericFilterBean {
 		HttpServletRequest request = HttpSnack.getHttpServletRequest(req);
 		HttpServletResponse response = HttpSnack.getHttpServletResponse(res);
 
+		// post 방식에 로그인 요청이 아닌 경우 작업종료
 		if (!new AntPathRequestMatcher(loginProcessingUrl, "POST").matches(request)) {
 			chain.doFilter(req, res);
 			return;
 		}
 
+		// ajax 즉 비동기 요청이 아닌 경우 오류발생.
 		if(!RequestSnack.isAjax(request)) {
 			throw new AuthenticationServiceException("Authentication only ajax supported: " + request.getHeader("X-Requested-With"));
 		}
 
 		String ignore = request.getParameter(ignoreParameterName);
 
+		// 중복로그인검사를 생략할 경우 작업종료
 		if (StringUtils.isNotEmpty(ignore)) {
 			chain.doFilter(req, res);
 			return;
