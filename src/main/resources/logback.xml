@@ -10,7 +10,7 @@
 	<logger name="org.springframework" level="info" />
 	<logger name="org.springframework.security" level="info" />
 
-	<logger name="org.syaku.apps" level="debug" />
+	<logger name="org.syaku" level="debug" />
 
 	<root level="debug">
 		<appender-ref ref="STDOUT" />

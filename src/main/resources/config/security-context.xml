@@ -43,7 +43,7 @@
 		1) A 계정으로 로그인 -> 세션생성
 		2) 다른 컴퓨터에서 A 계정으로 로그인 -> 새션생성 후 1번 세션은 제거된다. 즉 1번에서 로그인된 사용자는 로그아웃 처리된다.
 		-->
-		<b:entry key="maximumSessions" value="1"/>
+		<b:entry key="maximumSessions" value="-1"/>
 		<!--
 		설정된 세션 수를 넘지 못하게 할 수 있다. maximumSessions = 1 이고 true로 설정한 경우 다음과 같이 처리된다.
 		기존에 로그인 사용자가 있는 경우 더이상 같은 계정으로 로그인할 수 없게 된다. 기존에 로그인 사용자가 로그아웃하거나 세션이 파기되면 로그인할 수 있다.
@@ -67,7 +67,7 @@
 		<access-denied-handler ref="accessDeniedHandler" />
 
 		<custom-filter ref="concurrentSessionFilter" position="CONCURRENT_SESSION_FILTER" />
-		<custom-filter ref="duplicationLoginCheckFilter" before="FORM_LOGIN_FILTER" />
+		<!-- <custom-filter ref="duplicationLoginCheckFilter" before="FORM_LOGIN_FILTER" /> -->
 		<custom-filter ref="usernamePasswordAuthenticationFilter" position="FORM_LOGIN_FILTER" />
 		<custom-filter ref="logoutFilter" position="LOGOUT_FILTER" />
 
@@ -204,6 +204,17 @@
 			<user-service id="userDetailsService">
 				<user name="user" password="1234" authorities="ROLE_USER"/>
 				<user name="test" password="1234" authorities="ROLE_USER"/>
+				<user name="test1" password="1234" authorities="ROLE_USER"/>
+				<user name="test2" password="1234" authorities="ROLE_USER"/>
+				<user name="test3" password="1234" authorities="ROLE_USER"/>
+				<user name="test4" password="1234" authorities="ROLE_USER"/>
+				<user name="test5" password="1234" authorities="ROLE_USER"/>
+				<user name="test6" password="1234" authorities="ROLE_USER"/>
+				<user name="test7" password="1234" authorities="ROLE_USER"/>
+				<user name="test8" password="1234" authorities="ROLE_USER"/>
+				<user name="test9" password="1234" authorities="ROLE_USER"/>
+				<user name="test10" password="1234" authorities="ROLE_USER"/>
+
 				<user name="admin" password="1234" authorities="ROLE_USER, ROLE_ADMIN"/>
 			</user-service>
 		</authentication-provider>
