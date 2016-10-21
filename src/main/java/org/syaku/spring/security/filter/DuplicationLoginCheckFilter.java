@@ -3,6 +3,8 @@ package org.syaku.spring.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,7 +34,7 @@ import java.io.PrintWriter;
  * @since 2016. 9. 22.
  */
 public class DuplicationLoginCheckFilter extends GenericFilterBean {
-
+	private final static Logger logger = LoggerFactory.getLogger(DuplicationLoginCheckFilter.class);
 	private final SessionRegistry sessionRegistry;
 	private final UserDetailsService userDetailsService;
 	private final String loginProcessingUrl;
@@ -79,6 +81,8 @@ public class DuplicationLoginCheckFilter extends GenericFilterBean {
 			return;
 		}
 
+		logger.debug("Duplicate login check filter has been requested.");
+
 		boolean error = false;
 
 		try {
@@ -93,6 +97,7 @@ public class DuplicationLoginCheckFilter extends GenericFilterBean {
 				// 이미 로그인 사용자 여부
 				SessionInformationSupport sessionInformationSupport = new SessionInformationSupport(sessionRegistry);
 				if (sessionInformationSupport.userExists(username)) {
+					logger.debug("There is already a user logged in.");
 					error = true;
 				}
 			}
