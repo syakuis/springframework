@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+	">
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:file:/Users/syaku/develop/Server/H2/data/spring;DB_CLOSE_DELAY=-1;MODE=Oracle;TRACE_LEVEL_SYSTEM_OUT=2" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+	</bean>
+	
+	<bean id="meiTxManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<tx:advice id="meiTxAdvice" transaction-manager="meiTxManager">
+	<tx:attributes>
+		<tx:method name="get*" read-only="true"/>
+		<tx:method name="insert*"/>
+		<tx:method name="update*"/>
+		<tx:method name="save*"/>
+		<tx:method name="delete*"/>
+	</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut id="meiTxPointcut" expression="execution(* org.syaku.apps..*Service.*(..))" />
+		<aop:advisor advice-ref="meiTxAdvice" pointcut-ref="meiTxPointcut" />
+	</aop:config>
+	
+	<tx:annotation-driven transaction-manager="meiTxManager" />
+</beans>

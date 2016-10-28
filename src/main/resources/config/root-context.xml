@@ -14,5 +14,6 @@
 		<context:include-filter expression="org.springframework.stereotype.Service" type="annotation"/>
 		<context:include-filter expression="org.springframework.stereotype.Repository" type="annotation"/>
 		<context:include-filter expression="org.springframework.stereotype.Component" type="annotation"/>
+		<context:include-filter expression="org.mybatis.spring.annotation.MapperScan" type="annotation"/>
 	</context:component-scan>
 </beans>
