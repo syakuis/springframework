@@ -69,4 +69,8 @@ dependencies {
 	compile 'org.freemarker:freemarker:2.3.23'
 	compile 'org.mybatis:mybatis:3.4.1',
 			'org.mybatis:mybatis-spring:1.3.0'
+
+	compile 'org.modelmapper:modelmapper:0.7.5'
+
+	compile 'org.projectlombok:lombok:1.16.10'
 }

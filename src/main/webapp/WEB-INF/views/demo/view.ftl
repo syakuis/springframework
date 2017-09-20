@@ -7,7 +7,7 @@
 	<title>데모</title>
 </head>
 <body>
-<p>${demo.userName} / ${demo.user_id}</p>
+<p>${demo.user_name} / ${demo.user_id}</p>
 
 
 </body>

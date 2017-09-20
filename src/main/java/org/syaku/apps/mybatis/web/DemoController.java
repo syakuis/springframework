@@ -1,5 +1,8 @@
 package org.syaku.apps.mybatis.web;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.NameTokenizers;
+import org.omg.CORBA.Object;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +15,7 @@ import org.syaku.apps.mybatis.domain.Demo;
 import org.syaku.apps.mybatis.service.DemoService;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * @author Seok Kyun. Choi. 최석균 (Syaku)
@@ -35,7 +39,12 @@ public class DemoController {
 
 	@RequestMapping(value = "/demo/{idx}", method = RequestMethod.GET)
 	public String dispDemoView(Model model, @PathVariable("idx") String userId) {
-		model.addAttribute("demo", demoService.getDemoObject(userId, "Y"));
+		Demo demo = demoService.getDemoObject(userId, "Y");
+
+		ModelMapper modelMapper = new ModelMapper();
+		Map<String, Object> demoMap = modelMapper.map(demo, Map.class);
+		System.out.println(demoMap.toString());
+		model.addAttribute("demo", demoMap);
 		return "demo/view";
 	}
 
